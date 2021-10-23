@@ -68,7 +68,7 @@ Do5
 ## 3. Afficher les noms d'accords
 ### `build_print_chord_name_callback`
 
-Écrivez une fonction qui retourne une fonction qui sert callback et qui affiche le nom des accords qui sont joués. On affiche seulement quand seulement les notes de l'accord sont appuyées, pas relâchées, et on ne s'occuppe pas des arpèges. On passe en paramètre à `build_print_chord_name_callback` un dictionnaire d'associations notes et de nom d'accords suivi d'un dictionnaire de noms à numéro MIDI (le deuxième dictionnaire retourné par `build_note_dictionaries`.
+Écrivez une fonction qui retourne une fermeture lexicale qui sert callback et qui affiche le nom des accords qui sont joués. On affiche seulement quand seulement les notes de l'accord sont appuyées, pas relâchées, et on ne s'occuppe pas des arpèges. On passe en paramètre à `build_print_chord_name_callback` un dictionnaire d'associations notes et de nom d'accords suivi d'un dictionnaire de noms à numéro MIDI (le deuxième dictionnaire retourné par `build_note_dictionaries`.
 
 Exemple :
 ```python
