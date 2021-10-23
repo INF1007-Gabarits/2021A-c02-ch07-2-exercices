@@ -11,7 +11,7 @@ Dans cette série d'exercices, nous utiliserons un clavier MIDI virtuel nous per
 ## 1. Associations entre numéro MIDI et nom de notes
 ### `build_note_dictionaries`
 
-Écrivez une fonction qui générère deux dictionnaires : un qui associe chaque numéro MIDI pertinent à un nom de note ("Do", "Ré", "C", "D", etc.) et un qui fait l'inverse. la fonction prend en paramètre le nom de chaque 12 notes de l'octave partant sur do. Le deuxième paramètre indique si les noms de notes doivent être suivis du numéro de l'octave (par exemple "C4" ou "C" pour le *middle C*).
+Écrivez une fonction qui génère deux dictionnaires : un qui associe chaque numéro MIDI pertinent à un nom de note ("Do", "Ré", "C", "D", etc.) et un qui fait l'inverse. la fonction prend en paramètre le nom de chaque 12 notes de l'octave partant sur do. Le deuxième paramètre indique si les noms de notes doivent être suivis du numéro de l'octave (par exemple "C4" ou "C" pour le *middle C*).
 
 Exemple :
 ```python
