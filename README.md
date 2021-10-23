@@ -6,7 +6,7 @@ Avant de commencer. Consulter les instructions à suivre dans [instructions.md](
 
 ## Standard MIDI
 
-Dans cette série d'exercices, nous utiliserons un clavier MIDI virtuel nous permettant de produire des notes musicales et la [librairie Mido](https://mido.readthedocs.io/en/latest/) en Python. Elle ne fait pas partie de la libraire standard de Python, il faut donc l'installer (soit avec `pip` ou à travers votre IDE). Pour nos besoin, disons seulement le standard MIDI est un système de messages permettant de savoir quelles notes du clavier sont appuyées et relâchées. La librairie Mido nous permet d'obtenir ces messages dans un code Python et d'effectuer des actions sur ceux-ci.
+Dans cette série d'exercices, nous utiliserons un clavier MIDI virtuel nous permettant de produire des notes musicales et la [librairie Mido](https://mido.readthedocs.io/en/latest/) en Python. Elle ne fait pas partie de la libraire standard de Python, il faut donc l'installer, soit avec `pip` ou à travers votre IDE ([plus d'info](https://mido.readthedocs.io/en/latest/installing.html)). Pour nos besoin, disons seulement le standard MIDI est un système de messages permettant de savoir quelles notes du clavier sont appuyées et relâchées. La librairie Mido nous permet d'obtenir ces messages dans un code Python et d'effectuer des actions sur ceux-ci.
 
 ## 1. Associations entre numéro MIDI et nom de notes
 ### `build_note_dictionaries`
