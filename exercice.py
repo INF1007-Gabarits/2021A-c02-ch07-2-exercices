@@ -52,7 +52,12 @@ note_states = [False] * 12
 
 
 def main():
-	PORT_MIDI = "UnPortMIDI 0"
+	# Affiche les ports MIDI que mido reconnait.
+	available_input_ports = mido.get_input_names()
+	print(f"Liste des ports MIDI disponibles : {available_input_ports}")
+
+	# Des ports MIDI affichés précédement, choisissez celui qui vous convient.
+	port_midi = "3- UM-ONE 0"
 
 	english_names = ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]
 	solfeggio_names = ["Do", "Réb", "Ré", "Mib", "Mi", "Fa", "Fa#", "Sol", "Lab", "La", "Sib", "Si"]
@@ -67,10 +72,10 @@ def main():
 
 	input("Appuyez sur ENTER pour passer à l'étape suivante...")
 	print("- - " * 30)
-	
+
 	midi_to_name, name_to_midi = build_note_dictionaries(solfeggio_names, True)
 	print_note_name = build_print_note_name_callback(midi_to_name)
-	keyboard = mido.open_input(PORT_MIDI, callback=print_note_name)
+	keyboard = mido.open_input(port_midi, callback=print_note_name)
 
 	input("Affichage des noms de notes (Appuyez sur ENTER pour passer à l'étape suivante)..." "\n")
 	keyboard.close()
@@ -81,11 +86,12 @@ def main():
 		"Do majeur" : ("Do", "Mi", "Sol"),
 		"Fa majeur" : ("Fa", "La", "Do"),
 		"Sol majeur" : ("Sol", "Si", "Ré"),
+		"La mineur" : ("La", "Do", "Mi")
 	}
 	
 	midi_to_name, name_to_midi = build_note_dictionaries(solfeggio_names, False)
 	print_chord_name = build_print_chord_name_callback(chord_names, name_to_midi)
-	keyboard = mido.open_input(PORT_MIDI, callback=print_chord_name)
+	keyboard = mido.open_input(port_midi, callback=print_chord_name)
 	
 	input("Affichage des noms d'accords (Appuyez sur ENTER pour passer à l'étape suivante)..." "\n")
 	keyboard.close()
