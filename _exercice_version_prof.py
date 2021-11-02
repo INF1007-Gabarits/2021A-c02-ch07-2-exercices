@@ -26,7 +26,16 @@ def build_note_dictionaries(note_names, add_octave_no=True):
 	return midi_to_name, name_to_midi
 
 def build_print_note_name_callback(midi_to_name):
-	pass
+	# Fonction locale
+	# Soit message MIDI midi_msg, midi_msg.type donne le type, midi_msg.note donne la note
+
+	# Dans le callback :
+	def callback(midi_msg):
+		# Si on a un note_on et une vélocité > 0, alors on affiche le nom de la note associée au numéro (grâce au dict midi_to_name)
+		if midi_msg.type == "note_on" and midi_msg.velocity > 0:
+			print(midi_to_name[midi_msg.note])
+	# On retourne la fermeture lexicale.
+	return callback
 
 def build_print_chord_name_callback(chord_names_and_notes, name_to_midi):
 	# Construire le dictionnaire d'assocations entre état des notes et accord joué.
@@ -45,7 +54,24 @@ def build_print_chord_name_callback(chord_names_and_notes, name_to_midi):
 		chords[tuple(chord_notes)] = name
 
 	# Créez et retourner le callback
-	pass
+	def callback(midi_msg):
+		# On veut mettre à jour la variable globale, donc il faut la déclarer global pour y accéder
+		global note_states
+		# Si une note est appuyée
+		if midi_msg.type == "note_on" and midi_msg.velocity > 0:
+			# On met son élément correspondant dans l'état du clavier à True
+			note_states[midi_msg.note % notes_per_octave] = True
+			# Encore là, il faut convertir en tuple pour pouvoir s'en servir comme clé dans le dictionnaire.
+			note_states_tuple = tuple(note_states)
+			# Si accord connu
+			if note_states_tuple in chords:
+				# Affiche nom de l'accord, qui est la valeur associée à l'état des notes.
+				print(chords[note_states_tuple])
+		# Sinon si une note est relâchée
+		elif midi_msg.type == "note_off" or (midi_msg.type == "note_on" and midi_msg.velocity == 0):
+			# On met son élément correspondant dans l'état du clavier à False
+			note_states[midi_msg.note % notes_per_octave] = False
+	return callback
 
 # Variable globale qui contient l'état des notes de l'octave (1 = appuyée, 0 = relâchée)
 note_states = [False] * 12
@@ -57,7 +83,7 @@ def main():
 	print(f"Liste des ports MIDI disponibles : {available_input_ports}")
 
 	# Des ports MIDI affichés précédement, choisissez celui qui vous convient.
-	port_midi = "3- UM-ONE 0"
+	port_midi = "UnPortMIDI 0"
 
 	english_names = ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]
 	solfeggio_names = ["Do", "Réb", "Ré", "Mib", "Mi", "Fa", "Fa#", "Sol", "Lab", "La", "Sib", "Si"]
@@ -88,7 +114,7 @@ def main():
 		"Sol majeur" : ("Sol", "Si", "Ré"),
 		"La mineur" : ("La", "Do", "Mi")
 	}
-	
+
 	midi_to_name, name_to_midi = build_note_dictionaries(solfeggio_names, False)
 	print_chord_name = build_print_chord_name_callback(chord_names, name_to_midi)
 	keyboard = mido.open_input(port_midi, callback=print_chord_name)
